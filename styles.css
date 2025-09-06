@@ -1,0 +1,53 @@
+body {
+    padding-top: 76px;
+}
+
+.hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3');
+    background-size: cover;
+    background-position: center;
+    height: 60vh;
+    margin-top: 76px;
+    display: flex;
+    align-items: center;
+}
+
+.card {
+    transition: transform 0.3s;
+    height: 100%;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.producto-imagen {
+    height: 200px;
+    object-fit: cover;
+}
+
+#modal-galeria {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+#modal-galeria img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+#modal-galeria img:hover {
+    border-color: #007bff;
+}
+
+.admin-panel {
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    padding: 20px;
+    margin-bottom: 30px;
+}
