@@ -51,3 +51,24 @@ body {
     padding: 20px;
     margin-bottom: 30px;
 }
+
+.talla-btn {
+    border: 1px solid #ccc;
+    background: #f8f9fa;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.talla-btn:hover {
+    background: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.talla-btn.selected {
+    background: #198754;
+    color: #fff;
+    border-color: #198754;
+}

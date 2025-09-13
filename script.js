@@ -1,12 +1,27 @@
 // URL de tu API de Spring Boot (cambiar por la correcta)
-const API_URL = 'http://tu-api-springboot.com/api/products';
+const API_URL = 'http://localhost:8080/api/products';
 
 // Variable global para almacenar el producto actual
 let productoActual = null;
+let tallaSeleccionada = null; // 🔹 global para guardar la talla elegida
 
 // Función para formatear precio
 function formatPrice(price) {
-    return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(price);
+    if (!price) return "Consultar precio";
+
+    // Quitar símbolos, comas o letras por si viniera "1,200.50 MXN"
+    const cleaned = price.toString().replace(/[^0-9.]/g, "");
+    const parsed = parseFloat(cleaned);
+
+    if (isNaN(parsed)) {
+        return "Consultar precio";
+    }
+    return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(parsed);
+}
+
+function formatDescription(desc) {
+    if (!desc) return "No hay descripción disponible";
+    return desc.replace(/\*/g, "<br><br>*");
 }
 
 // Función para cargar productos desde la API
@@ -15,7 +30,7 @@ async function cargarProductos() {
         const response = await fetch(API_URL);
         const productos = await response.json();
 
-        mostrarProductos(productos);
+        mostrarProductos(productos.filter(p => p.active));
     } catch (error) {
         console.error('Error al cargar productos:', error);
         // En caso de error, mostrar productos de ejemplo
@@ -37,7 +52,7 @@ function mostrarProductos(productos) {
                      class="card-img-top producto-imagen" alt="${producto.name}">
                 <div class="card-body">
                     <h5 class="card-title">${producto.name}</h5>
-                    <p class="card-text">${producto.price ? formatPrice(producto.price) : 'Precio no disponible'}</p>
+                    <p class="card-text">${formatPrice(producto.price)}</p>
                     <button class="btn btn-primary" onclick="mostrarDetallesProducto(${JSON.stringify(producto).replace(/"/g, '&quot;')})">
                         Ver detalles
                     </button>
@@ -51,13 +66,15 @@ function mostrarProductos(productos) {
 // Función para mostrar detalles del producto en el modal
 function mostrarDetallesProducto(producto) {
     productoActual = producto;
+    tallaSeleccionada = null; // reset al abrir modal nuevo
 
     document.getElementById('modal-nombre').textContent = producto.name;
     document.getElementById('modal-precio').textContent = producto.price ? formatPrice(producto.price) : 'Consultar precio';
-    document.getElementById('modal-descripcion').textContent = producto.description || 'No hay descripción disponible';
+    document.getElementById('modal-descripcion').innerHTML = formatDescription(producto.description);
 
     const imagenModal = document.getElementById('modal-imagen');
     const galeriaModal = document.getElementById('modal-galeria');
+    const tallasContainer = document.getElementById('modal-tallas');
 
     // Configurar imagen principal
     if (producto.images && producto.images.length > 0) {
@@ -80,6 +97,26 @@ function mostrarDetallesProducto(producto) {
         galeriaModal.innerHTML = '';
     }
 
+    // 🔹 Renderizar tallas disponibles
+    tallasContainer.innerHTML = '';
+    if (producto.availableSizes && producto.availableSizes.length > 0) {
+        producto.availableSizes.forEach(size => {
+            const btn = document.createElement('button');
+            btn.className = 'talla-btn';
+            btn.textContent = size;
+            btn.onclick = () => {
+                // quitar selección previa
+                document.querySelectorAll('#modal-tallas .talla-btn').forEach(b => b.classList.remove('selected'));
+                // marcar seleccionado
+                btn.classList.add('selected');
+                tallaSeleccionada = size;
+            };
+            tallasContainer.appendChild(btn);
+        });
+    } else {
+        tallasContainer.innerHTML = '<span class="text-muted">No hay tallas disponibles</span>';
+    }
+
     // Mostrar el modal
     const modal = new bootstrap.Modal(document.getElementById('productoModal'));
     modal.show();
@@ -89,8 +126,12 @@ function mostrarDetallesProducto(producto) {
 function comprarPorWhatsApp() {
     if (!productoActual) return;
 
-    const telefono = "1234567890"; // Reemplazar con el número de tu amigo
-    const mensaje = `¡Hola! Estoy interesado en comprar el producto: ${productoActual.name} - ${productoActual.price ? formatPrice(productoActual.price) : 'Consultar precio'}.`;
+    const telefono = "+523121000117"; // Reemplazar con el número de tu amigo
+    let mensaje = `¡Hola! Estoy interesado en comprar el producto: ${productoActual.name} - ${productoActual.price ? formatPrice(productoActual.price) : 'Consultar precio'}.`;
+
+    if (tallaSeleccionada) {
+        mensaje += `\nTalla seleccionada: ${tallaSeleccionada}`;
+    }
 
     const urlWhatsApp = `https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
     window.open(urlWhatsApp, '_blank');
