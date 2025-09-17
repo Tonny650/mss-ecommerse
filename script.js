@@ -4,6 +4,7 @@ const API_URL = 'http://localhost:8080/api/products';
 // Variable global para almacenar el producto actual
 let productoActual = null;
 let tallaSeleccionada = null; // 🔹 global para guardar la talla elegida
+let productosGlobal = []; // guardamos todos los productos aquí
 
 // Función para formatear precio
 function formatPrice(price) {
@@ -30,7 +31,13 @@ async function cargarProductos() {
         const response = await fetch(API_URL);
         const productos = await response.json();
 
-        mostrarProductos(productos.filter(p => p.active));
+        // 🔹 Guardamos en variable global
+        productosGlobal = productos.filter(p => p.active && !p.watermark);
+
+        // 🔹 Poblar el filtro de tallas
+        poblarFiltroTallas(productosGlobal);
+
+        mostrarProductos(productosGlobal);
     } catch (error) {
         console.error('Error al cargar productos:', error);
         // En caso de error, mostrar productos de ejemplo
@@ -52,7 +59,7 @@ function mostrarProductos(productos) {
                      class="card-img-top producto-imagen" alt="${producto.name}">
                 <div class="card-body">
                     <h5 class="card-title">${producto.name}</h5>
-                    <p class="card-text">${formatPrice(producto.price)}</p>
+                    <p class="card-text">${formatPrice(producto.retailPrice)}</p>
                     <button class="btn btn-primary" onclick="mostrarDetallesProducto(${JSON.stringify(producto).replace(/"/g, '&quot;')})">
                         Ver detalles
                     </button>
@@ -69,7 +76,7 @@ function mostrarDetallesProducto(producto) {
     tallaSeleccionada = null; // reset al abrir modal nuevo
 
     document.getElementById('modal-nombre').textContent = producto.name;
-    document.getElementById('modal-precio').textContent = producto.price ? formatPrice(producto.price) : 'Consultar precio';
+    document.getElementById('modal-precio').textContent = producto.retailPrice ? formatPrice(producto.retailPrice) : 'Consultar precio';
     document.getElementById('modal-descripcion').innerHTML = formatDescription(producto.description);
 
     const imagenModal = document.getElementById('modal-imagen');
@@ -127,7 +134,7 @@ function comprarPorWhatsApp() {
     if (!productoActual) return;
 
     const telefono = "+523121000117"; // Reemplazar con el número de tu amigo
-    let mensaje = `¡Hola! Estoy interesado en comprar el producto: ${productoActual.name} - ${productoActual.price ? formatPrice(productoActual.price) : 'Consultar precio'}.`;
+    let mensaje = `¡Hola! Estoy interesado en comprar el producto: ${productoActual.name} - ${productoActual.retailPrice ? formatPrice(productoActual.retailPrice) : 'Consultar precio'}.`;
 
     if (tallaSeleccionada) {
         mensaje += `\nTalla seleccionada: ${tallaSeleccionada}`;
@@ -155,5 +162,45 @@ function obtenerProductosEjemplo() {
     ];
 }
 
+function poblarFiltroTallas(productos) {
+    const select = document.getElementById("filtro-talla");
+
+    // Recolectar todas las tallas únicas
+    const tallas = new Set();
+    productos.forEach(p => {
+        if (p.allSizes) {
+            p.allSizes.forEach(size => tallas.add(size));
+        }
+    });
+
+    // Insertar opciones
+    tallas.forEach(size => {
+        const option = document.createElement("option");
+        option.value = size;
+        option.textContent = size;
+        select.appendChild(option);
+    });
+
+    // Evento para filtrar
+    select.addEventListener("change", () => {
+        const tallaSeleccionada = select.value;
+        if (!tallaSeleccionada) {
+            mostrarProductos(productosGlobal);
+        } else {
+            const filtrados = productosGlobal.filter(p =>
+                p.availableSizes.includes(tallaSeleccionada)
+            );
+            mostrarProductos(filtrados);
+        }
+    });
+}
+
+
 // Cargar productos cuando la página esté lista
 document.addEventListener('DOMContentLoaded', cargarProductos);
+
+document.addEventListener("scroll", () => {
+    const navbar = document.querySelector(".navbar");
+    navbar.classList.toggle("scrolled", window.scrollY > 50);
+});
+

@@ -13,13 +13,25 @@ body {
 }
 
 .card {
-    transition: transform 0.3s;
-    height: 100%;
+    border: none;
+    border-radius: 15px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.card-img-top {
+    border-bottom: 1px solid #f0f0f0;
+    transition: transform 0.3s ease;
+}
+
+.card:hover .card-img-top {
+    transform: scale(1.05);
 }
 
 .producto-imagen {
@@ -42,7 +54,7 @@ body {
 }
 
 #modal-galeria img:hover {
-    border-color: #007bff;
+    border-color: #198754;
 }
 
 .admin-panel {
@@ -71,4 +83,108 @@ body {
     background: #198754;
     color: #fff;
     border-color: #198754;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #007bff, #00c6ff);
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(45deg, #0056b3, #0096c7);
+    transform: scale(1.05);
+}
+
+.modal-content {
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+#products {
+    background: linear-gradient(to bottom, #f9f9f9, #ffffff);
+    padding: 60px 0;
+}
+
+.modal-header {
+    background: #007bff;
+    color: #fff;
+}
+.modal-header .btn-close {
+    filter: invert(1);
+}
+
+.navbar {
+    background: rgba(0,0,0,0.7) !important;
+    backdrop-filter: blur(8px);
+    transition: background 0.3s ease;
+}
+
+.navbar.scrolled {
+    background: rgba(0,0,0,0.9) !important;
+}
+
+#modal-imagen {
+    width: 100%;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+}
+
+#modal-imagen:hover {
+    transform: scale(1.05);
+}
+
+#modal-galeria {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+}
+
+#modal-galeria img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+}
+
+#modal-galeria img:hover {
+    border-color: #007bff;
+    transform: scale(1.05);
+}
+
+#modal-galeria img.active {
+    border-color: #198754;
+    box-shadow: 0 4px 15px rgba(25,135,84,0.3);
+}
+
+.talla-chip {
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 6px 14px;
+    background: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+}
+
+.talla-chip:hover {
+    background: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+
+.talla-chip.selected {
+    background: #198754;
+    color: #fff;
+    border-color: #198754;
+    box-shadow: 0 4px 10px rgba(25, 135, 84, 0.3);
 }
