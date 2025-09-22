@@ -162,3 +162,24 @@ function poblarFiltroTallas(productos) {
 
 // Inicializar
 document.addEventListener("DOMContentLoaded", cargarProductosDesdeJSON);
+
+document.addEventListener("scroll", () => {
+    const navbar = document.querySelector(".navbar");
+    navbar.classList.toggle("scrolled", window.scrollY > 50);
+
+    // Resaltar enlace activo
+    const links = document.querySelectorAll(".navbar .nav-link");
+    links.forEach(link => {
+        const section = document.querySelector(link.getAttribute("href"));
+        if (section) {
+            const top = section.offsetTop - navbar.offsetHeight - 20;
+            const bottom = top + section.offsetHeight;
+            if (window.scrollY >= top && window.scrollY < bottom) {
+                link.classList.add("active");
+            } else {
+                link.classList.remove("active");
+            }
+        }
+    });
+});
+

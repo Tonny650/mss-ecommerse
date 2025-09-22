@@ -5,11 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cb772463-7cc4-4aa2-a276-4f9975b403de" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/assets/data/products.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/data/test/products-test.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/script-json.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/Logo-StreetSaga-PNG-1000X1000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/Logo-StreetSaga-PNG-1000X1000_write.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/Logo-StreetSaga.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/Logo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script-json.js" beforeDir="false" afterPath="$PROJECT_DIR$/script-json.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +23,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="CSS File" />
-        <option value="HTML File" />
         <option value="JavaScript File" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -63,7 +66,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "train-anthony",
     "junie.onboarding.icon.badge.shown": "true",
-    "last_opened_file_path": "D:/MySagaShop/FrontEnd/Web/MSS-Ecommerce/mss-ecommerse/assets/data",
+    "last_opened_file_path": "D:/MySagaShop/FrontEnd/Web/MSS-Ecommerce/mss-ecommerse/assets/images",
     "list.type.of.created.stylesheet": "CSS",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -78,8 +81,12 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\MySagaShop\FrontEnd\Web\MSS-Ecommerce\mss-ecommerse\assets\images" />
       <recent name="D:\MySagaShop\FrontEnd\Web\MSS-Ecommerce\mss-ecommerse\assets\data" />
       <recent name="D:\MySagaShop\FrontEnd\Web\MSS-Ecommerce\mss-ecommerse\assets\data\test" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\MySagaShop\FrontEnd\Web\MSS-Ecommerce\mss-ecommerse\assets\images" />
     </key>
   </component>
   <component name="RunManager">
@@ -114,7 +121,7 @@
       <workItem from="1757999927882" duration="1829000" />
       <workItem from="1758047074509" duration="8058000" />
       <workItem from="1758128048305" duration="5057000" />
-      <workItem from="1758504147731" duration="736000" />
+      <workItem from="1758504147731" duration="9982000" />
     </task>
     <servers />
   </component>
