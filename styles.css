@@ -270,12 +270,10 @@ section p.lead {
         font-size: 0.95rem;
     }
 }
+
 /* ================= Hero ================= */
 .hero-section {
-    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
-    url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3');
-    background-size: cover;
-    background-position: center;
+    position: relative;
     height: 75vh;
     display: flex;
     align-items: center;
@@ -284,6 +282,42 @@ section p.lead {
     flex-direction: column;
     color: #fff;
     padding: 0 20px;
+    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+    url('https://png.pngtree.com/background/20230309/original/pngtree-city-%E2%80%8B%E2%80%8Bstreet-night-cartoon-buildings-scenery-background-picture-image_2108360.jpg');
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
+    url('https://i.redd.it/synthwave-3840x2160-v0-1fw8gg1oah3e1.png?width=3840&format=png&auto=webp&s=bbd24599a949ef151a4d5b9fb99c492eb58e55d3');
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    animation: fadeBg 8s infinite alternate;
+    z-index: 1;
+    animation-play-state: running;
+    animation-timing-function: linear
+}
+
+@keyframes fadeBg {
+    0% { opacity: 0; }
+    50% { opacity: 1; }
+    100% { opacity: 0; }
+}
+
+.hero-section h1,
+.hero-section p.lead,
+.hero-section img {
+    position: relative;
+    z-index: 2;
 }
 
 .hero-section h1 {
@@ -297,6 +331,11 @@ section p.lead {
     font-size: 1.2rem;
     margin-bottom: 25px;
     text-shadow: 1px 1px 8px rgba(0,0,0,0.5);
+}
+
+.hero-section .btn {
+    position: relative;
+    z-index: 2;
 }
 
 /* ================= Botón animado ================= */
@@ -340,5 +379,9 @@ section p.lead {
     .hero-section h1 { font-size: 2rem; }
     .hero-section p.lead { font-size: 1rem; }
     .btn-primary { padding: 10px 22px; font-size: 0.95rem; }
+}
+
+.navbar-brand{
+    font-family: "Sriracha", cursive;
 }
 
