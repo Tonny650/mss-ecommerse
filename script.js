@@ -1,5 +1,5 @@
 // URL de tu API de Spring Boot (cambiar por la correcta)
-const API_URL = 'http://72.60.127.45:8080/api/products';
+const API_URL = 'https://thestreetsaga.cloud/api/products';
 
 // Variable global para almacenar el producto actual
 let productoActual = null;
