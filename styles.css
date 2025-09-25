@@ -396,3 +396,38 @@ section p.lead {
     font-family: "Sriracha", cursive;
 }
 
+#carouselProducto img {
+    border-radius: 10px;
+    object-fit: contain;
+    height: 300px;
+}
+.carousel-indicators button {
+    background-color: #198754; /* verde como en ML */
+}
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    filter: invert(1); /* hace que se vean blancos */
+}
+
+.descripcion-lista {
+    list-style: none;   /* ❌ elimina los bullets nativos */
+    padding-left: 0;    /* quitamos indentación */
+    margin: 0;
+}
+
+.descripcion-lista li {
+    position: relative;
+    padding-left: 20px; /* espacio para nuestro puntito */
+    margin-bottom: 8px;
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.descripcion-lista li::before {
+    content: "•";       /* nuestro puntito custom */
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #000000;     /* puedes cambiarlo al verde ML (#198754) o negro (#333) */
+    font-weight: bold;
+}

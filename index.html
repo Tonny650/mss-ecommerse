@@ -122,6 +122,7 @@
 </footer>
 
 <!-- Modal para detalles de producto -->
+<!-- Modal para detalles de producto -->
 <div class="modal fade" id="productoModal" tabindex="-1">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -131,10 +132,24 @@
             </div>
             <div class="modal-body">
                 <div class="row">
+                    <!-- Carrusel en lugar de imagen fija -->
                     <div class="col-md-6">
-                        <img id="modal-imagen" src="" class="img-fluid" alt="Producto">
-                        <div class="mt-3" id="modal-galeria"></div>
+                        <div id="carouselProducto" class="carousel slide" data-bs-ride="carousel">
+                            <!-- Indicadores -->
+                            <div class="carousel-indicators"></div>
+                            <!-- Contenedor de imágenes -->
+                            <div class="carousel-inner"></div>
+                            <!-- Controles -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#carouselProducto" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#carouselProducto" data-bs-slide="next">
+                                <span class="carousel-control-next-icon"></span>
+                            </button>
+                        </div>
                     </div>
+
+                    <!-- Info del producto -->
                     <div class="col-md-6">
                         <h3 id="modal-nombre"></h3>
                         <h4 id="modal-precio" class="text-primary my-3"></h4>
@@ -157,6 +172,6 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="script-json.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

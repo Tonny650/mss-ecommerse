@@ -1,5 +1,5 @@
 // URL de tu API de Spring Boot (cambiar por la correcta)
-const API_URL = 'http://localhost:8080/api/products';
+const API_URL = 'http://72.60.127.45:8080/api/products';
 
 // Variable global para almacenar el producto actual
 let productoActual = null;
@@ -20,9 +20,22 @@ function formatPrice(price) {
     return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN' }).format(parsed);
 }
 
-function formatDescription(desc) {
-    if (!desc) return "No hay descripción disponible";
-    return desc.replace(/\*/g, "<br><br>*");
+function formatDescription(description) {
+    if (!description) return "<p class='text-muted'>Sin descripción</p>";
+
+    // Dividimos por * y limpiamos espacios
+    const items = description
+        .split('*')
+        .map(txt => txt.trim())
+        .filter(txt => txt.length > 0);
+
+    // Generamos lista UL
+    return `
+    <h6 class="fw-bold mb-2">Lo que tienes que saber de este producto</h6>
+    <ul class="descripcion-lista">
+      ${items.map(i => `<li>${i}</li>`).join('')}
+    </ul>
+  `;
 }
 
 // Función para cargar productos desde la API
@@ -73,38 +86,44 @@ function mostrarProductos(productos) {
 // Función para mostrar detalles del producto en el modal
 function mostrarDetallesProducto(producto) {
     productoActual = producto;
-    tallaSeleccionada = null; // reset al abrir modal nuevo
+    tallaSeleccionada = null;
 
     document.getElementById('modal-nombre').textContent = producto.name;
     document.getElementById('modal-precio').textContent = producto.retailPrice ? formatPrice(producto.retailPrice) : 'Consultar precio';
     document.getElementById('modal-descripcion').innerHTML = formatDescription(producto.description);
 
-    const imagenModal = document.getElementById('modal-imagen');
-    const galeriaModal = document.getElementById('modal-galeria');
-    const tallasContainer = document.getElementById('modal-tallas');
+    const carouselInner = document.querySelector("#carouselProducto .carousel-inner");
+    const carouselIndicators = document.querySelector("#carouselProducto .carousel-indicators");
 
-    // Configurar imagen principal
+    // Reset carrusel
+    carouselInner.innerHTML = "";
+    carouselIndicators.innerHTML = "";
+
     if (producto.images && producto.images.length > 0) {
-        imagenModal.src = producto.images[0];
-        imagenModal.alt = producto.name;
-
-        // Configurar galería de imágenes
-        galeriaModal.innerHTML = '';
         producto.images.forEach((imagen, index) => {
-            const miniatura = document.createElement('img');
-            miniatura.src = imagen;
-            miniatura.alt = `Imagen ${index + 1} de ${producto.name}`;
-            miniatura.onclick = () => {
-                imagenModal.src = imagen;
-            };
-            galeriaModal.appendChild(miniatura);
+            // Slide
+            const slide = document.createElement("div");
+            slide.className = `carousel-item ${index === 0 ? "active" : ""}`;
+            slide.innerHTML = `<img src="${imagen}" class="d-block w-100" alt="Imagen ${index + 1} de ${producto.name}" style="object-fit: contain; height: 300px;">`;
+            carouselInner.appendChild(slide);
+
+            // Indicador
+            const indicator = document.createElement("button");
+            indicator.type = "button";
+            indicator.setAttribute("data-bs-target", "#carouselProducto");
+            indicator.setAttribute("data-bs-slide-to", index);
+            indicator.className = index === 0 ? "active" : "";
+            carouselIndicators.appendChild(indicator);
         });
     } else {
-        imagenModal.src = 'https://via.placeholder.com/500';
-        galeriaModal.innerHTML = '';
+        carouselInner.innerHTML = `
+          <div class="carousel-item active">
+            <img src="https://via.placeholder.com/500" class="d-block w-100" alt="Sin imagen" style="object-fit: contain; height: 300px;">
+          </div>`;
     }
 
-    // 🔹 Renderizar tallas disponibles
+    // 🔹 Renderizar tallas
+    const tallasContainer = document.getElementById('modal-tallas');
     tallasContainer.innerHTML = '';
     if (producto.availableSizes && producto.availableSizes.length > 0) {
         producto.availableSizes.forEach(size => {
@@ -112,9 +131,7 @@ function mostrarDetallesProducto(producto) {
             btn.className = 'talla-btn';
             btn.textContent = size;
             btn.onclick = () => {
-                // quitar selección previa
                 document.querySelectorAll('#modal-tallas .talla-btn').forEach(b => b.classList.remove('selected'));
-                // marcar seleccionado
                 btn.classList.add('selected');
                 tallaSeleccionada = size;
             };
@@ -124,7 +141,7 @@ function mostrarDetallesProducto(producto) {
         tallasContainer.innerHTML = '<span class="text-muted">No hay tallas disponibles</span>';
     }
 
-    // Mostrar el modal
+    // Mostrar modal
     const modal = new bootstrap.Modal(document.getElementById('productoModal'));
     modal.show();
 }
